@@ -222,6 +222,9 @@ c = [
     [7, 8, 9]
 ]
 
+c = np.array(c)
+
+
 # HINT, you'll first need to make sure that the "c" variable is a numpy array prior to using numpy array methods.
 # Exercise 1 - Find the min, max, sum, and product of c.
 c_min = np.min(c)
@@ -245,10 +248,11 @@ c_std
 
 c_var = np.var(c)
 c_var
+
+c.var()
 # Exercise 4 - Print out the shape of the array c
 
-c_trans = np.transpose(c)
-print(c_trans)
+c.shape
 
 # Exercise 5 - Transpose c and print out transposed result.
 
@@ -256,6 +260,7 @@ c_trans = np.transpose(c)
 print(c_trans)
 
 
+c.transpose()
 # Exercise 6 - Get the dot product of the array c with c. 
 c_dot = np.dot(c,c)
 c_dot
@@ -263,8 +268,13 @@ c_dot
 # Exercise 7 - Write the code necessary to sum up the result of c times c transposed. Answer should be 261
 sum(sum(c * np.transpose(c)))
 
+
+(c * c.transpose()).sum()
 # Exercise 8 - Write the code necessary to determine the product of c times c transposed. Answer should be 131681894400.
 np.prod(np.transpose(c * c))
+
+(c*c.transpose()).prod()
+
 
 ## Setup 4
 d = [
@@ -296,9 +306,17 @@ uniqd = np.unique(d)
 uniqd
 # Exercise 7 - Determine how many unique numbers there are in d.
 len(np.unique(d))
+
+
+np.unique(d).shape[0]
+
+
 # Exercise 8 - Print out the shape of d.
 print(np.shape(d))
 # Exercise 9 - Transpose and then print out the shape of d.
 print(np.transpose(d))
 # Exercise 10 - Reshape d into an array of 9 x 2
 d.reshape(9,2)
+
+
+d.reshape(9, -1)
