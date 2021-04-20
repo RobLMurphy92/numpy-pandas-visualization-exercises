@@ -335,9 +335,151 @@ letters.apply(lambda x: False if x in 'aeiou' else True).sum()
 
 # ### 5.) Create a Series that has all of the same letters but uppercased.
 
+letter_cap = pd.Series(letter).str.upper()
+letter_cap
+
+
+# ### 6.) Create a bar plot of the frequencies of the 6 most commonly occuring letters.
+
+# In[ ]:
 
 
 
+
+
+# In[71]:
+
+
+six_most = letters.value_counts().nlargest(n=6)
+six_most
+
+
+# In[91]:
+
+
+six_most.plot.bar(title = 'Six Most Frequent Letters', rot =0 ).set(xlabel = '$Letter$', ylabel = '$Count$')
+
+
+plt.show()
+   
+
+
+# In[47]:
+
+
+number = ['$796,459.41', '$278.60', '$482,571.67', '$4,503,915.98', '$2,121,418.3', '$1,260,813.3', '$87,231.01', '$1,509,175.45', '$4,138,548.00', '$2,848,913.80', '$594,715.39', '$4,789,988.17', '$4,513,644.5', '$3,191,059.97', '$1,758,712.24', '$4,338,283.54', '$4,738,303.38', '$2,791,759.67', '$769,681.94', '$452,650.23']
+
+
+# In[49]:
+
+
+numberslist = list(number)
+numbers = pd.Series(numberslist)
+
+
+# ### 1.) What is the data type of the numbers Series?
+
+# In[52]:
+
+
+numbers.dtype
+
+
+# ### 2.) How many elements are in the number Series?
+
+# In[51]:
+
+
+numbers.size
+
+
+# ### 3.) Perform the necessary manipulations by accessing Series attributes and methods to convert the numbers Series to a numeric data type.
+
+# In[124]:
+
+
+numbers.str.replace('$', '').str.replace(',', '').astype(float).sort_values()
+
+
+# In[114]:
+
+
+
+
+
+# ### 4.) Run the code to discover the maximum value from the Series.
+
+# In[56]:
+
+
+new_numbers.max()
+
+
+# ### 5.) Run the code to discover the minimum value from the Series.
+
+# In[57]:
+
+
+new_numbers.min()
+
+
+# ### 6.) What is the range of the values in the Series?
+
+# In[59]:
+
+
+new_numbers_range = new_numbers.max() - new_numbers.min()
+new_numbers_range
+
+
+# ### 7.) Bin the data into 4 equally sized intervals or bins and output how many values fall into each bin.
+
+# In[66]:
+
+
+pd.cut(new_numbers.sort_values(), 4).value_counts()
+
+
+# ### 8.) Plot the binned data in a meaningful way. Be sure to include a title and axis labels.
+
+# In[102]:
+
+
+pd.cut(new_numbers.sort_values(), 4).value_counts().plot.barh(title = '$Quartered Dollar Ranges$', xlabel = '$Dollar Ranges$', ylabel = 'Count')
+
+
+# ### Exercise 3 Part II
+
+# In[73]:
+
+
+exam_scores = [60, 86, 75, 62, 93, 71, 60, 83, 95, 78, 65, 72, 69, 81, 96, 80, 85, 92, 82, 78]
+
+
+# In[75]:
+
+
+exam_scores = pd.Series(list(exam_scores))
+exam_scores
+
+
+# ### 1.) How many elements are in the exam_scores Series?
+
+# In[76]:
+
+
+exam_scores.size
+
+
+# ### 2.) Run the code to discover the minimum, the maximum, the mean, and the median scores for the exam_scores Series.
+
+# In[77]:
+
+
+exam_scores.describe()
+
+
+# ### 3.) Plot the Series in a meaningful way and make sure your chart has a title and axis labels.
 
 # In[ ]:
 
@@ -345,7 +487,12 @@ letters.apply(lambda x: False if x in 'aeiou' else True).sum()
 
 
 
-# In[ ]:
+# ### 4.) Write the code necessary to implement a curve for your exam_grades Series and save this as curved_grades. Add the necessary points to the highest grade to make it 100, and add the same number of points to every other score in the Series as well.
+
+# ### 5.) Use a method to convert each of the numeric values in the curved_grades Series into a categorical value of letter grades. For example, 86 should be a 'B' and 95 should be an 'A'. Save this as a Series named letter_grades.
+
+# ### 6.) Plot your new categorical letter_grades Series in a meaninful way and include a title and axis labels.
+
 
 
 
