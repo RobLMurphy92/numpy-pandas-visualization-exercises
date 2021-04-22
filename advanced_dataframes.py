@@ -18,13 +18,11 @@ from env import host, user, password
 
 # In[57]:
 
-
 def get_db_url(user, host, password, db):
     return f'mysql+pymysql://{user}:{password}@{host}/{db}'
 
 
 # In[58]:
-
 
 sql_query = 'select * from employees'
 sql_query
