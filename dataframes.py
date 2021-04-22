@@ -89,7 +89,6 @@ df['overall_grade'] = (df['math']+ df['english']+ df['reading'])/3
 df
 
 
-# 
 
 # 2.) Load the mpg dataset. Read the documentation for the dataset and use it for the following questions:
 # 
@@ -118,7 +117,7 @@ mpg = data('mpg')
 # In[11]:
 
 
-mpg.info
+mpg.info()
 
 #234 rows, 11 columns
 
@@ -137,13 +136,13 @@ mpg.dtypes
 # In[13]:
 
 
-mpg.describe
+mpg.describe()
 
 
 # In[14]:
 
 
-mpg.info
+mpg.info()
 
 
 # #### e.) Rename the cty column to city.
