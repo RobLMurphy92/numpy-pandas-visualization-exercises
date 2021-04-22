@@ -470,3 +470,186 @@ mpg_new.groupby('manufacturer').average_mileage.agg(['mean']).sort_values(by = '
 
 mpg_new.groupby('is_automatic').average_mileage.agg(['mean']).sort_values(by = 'mean', ascending = False)
 
+# ### Exercises III
+
+# 1.) Use your get_db_url function to help you explore the data from the chipotle database.
+
+# In[ ]:
+
+
+from env import host, user, password
+
+
+# In[ ]:
+
+
+def get_db_url(user, host, password, db):
+    return f'mysql+pymysql://{user}:{password}@{host}/{db}'
+
+
+# In[ ]:
+
+
+url = f'mysql+pymysql://{user}:{password}@{host}/chipotle'
+
+
+# In[ ]:
+
+
+chipotle_df = pd.read_sql('SELECT * FROM orders', url)
+
+
+# In[ ]:
+
+
+chipotle_df.drop(columns = 'revenue')
+
+
+# 2.) What is the total price for each order?
+
+# In[ ]:
+
+
+chipotle_df['item_price_float'] = chipotle_df['item_price'].str.replace('$', '').astype(float)
+
+
+# In[ ]:
+
+
+chipotle_df.groupby('order_id').item_price_float.agg('sum')
+
+
+# 3.) What are the most popular 3 items?
+
+# In[ ]:
+
+
+chipotle_df.groupby('item_name').quantity.agg(['sum']).sort_values(by=['sum'], ascending = False).head(3)
+
+
+# 4.) Which item has produced the most revenue?
+
+# In[ ]:
+
+
+chipotle_df.groupby('item_name').item_price_float.agg(['sum']).nlargest(3, 'sum', keep ='all')
+
+
+# 5.) Using the titles DataFrame, visualize the number of employees with each title.
+
+# In[10]:
+
+
+url = f'mysql+pymysql://{user}:{password}@{host}/employees'
+
+
+# In[12]:
+
+
+titles_df = pd.read_sql('SELECT * FROM titles', url)
+titles_df
+
+
+# In[13]:
+
+
+titles_df.title.value_counts()
+
+
+# 6.) Join the employees and titles DataFrames together.
+
+# In[11]:
+
+
+employees_df = pd.read_sql('SELECT * FROM employees', url)
+employees_df
+
+
+# In[14]:
+
+
+emp_title = employees_df.merge(titles_df, how='outer', on='emp_no', indicator=True)
+emp_title.head()
+
+
+# 7.) Visualize how frequently employees change titles.
+# 
+
+# In[ ]:
+
+
+import matplotlib.pyplot as plt
+
+
+# In[ ]:
+
+
+
+
+
+# In[31]:
+
+
+title_count = emp_title.groupby('emp_no').title.count().value_counts()
+
+
+# In[ ]:
+
+
+
+
+
+# In[32]:
+
+
+employee_title = pd.crosstab(emp_title.emp_no, emp_title.title, margins = True)
+employee_title
+
+
+# 8.) For each title, find the hire date of the employee that was hired most recently with that title.`
+
+# In[36]:
+
+
+emp_title
+
+
+# In[37]:
+
+
+emp_title.groupby('title').hire_date.agg('max')
+
+
+# 9.) Write the code necessary to create a cross tabulation of the number of titles by department. (Hint: this will involve a combination of SQL code to pull the necessary data and python/pandas code to perform the manipulations.)
+
+# In[20]:
+
+
+title_dept = '''
+select de.emp_no, d.dept_name,d.dept_no, t.title
+from dept_emp as de
+join departments as d 
+ON de.dept_no = d.dept_no
+join titles as t 
+ON de.emp_no = t.emp_no;
+'''
+
+
+# In[39]:
+
+
+title_by_depart = pd.read_sql(title_dept, url)
+title_by_depart.head(10)
+
+
+# In[35]:
+
+
+title_by_depart.groupby('dept_name').title.count()
+
+
+# In[40]:
+
+
+pd.crosstab(title_by_depart.dept_name, title_by_depart.title, margins = True)
+
