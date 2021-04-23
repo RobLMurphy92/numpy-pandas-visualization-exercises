@@ -52,6 +52,12 @@ sns.displot(iris.petal_length)
 sns.relplot(data = iris, x = 'petal_width', y = 'petal_length')
 
 
+# In[ ]:
+
+
+
+
+
 # There appears to be a relationship between petal width and petal length. A positive trend indicates that petal width increases as petal length increases
 
 # 3.) Would it be reasonable to predict species based on sepal width and sepal length?
@@ -64,9 +70,21 @@ sns.relplot(data = iris, x = 'petal_width', y = 'petal_length')
 sns.relplot(data = iris, x = 'sepal_width', y = 'sepal_length', hue = 'species')
 
 
+# In[81]:
+
+
+sns.relplot(data = iris, x = 'sepal_width', y = 'sepal_length', hue = 'species', kind = 'line')
+
+
 # 4.) Which features would be best used to predict species?
 # Petal length and width would be the best features to use in prediction. Different species could have petal lengths which correalate to the petal width. Meaning some species with small widths have small lengths, etc..
 # 
+
+# In[83]:
+
+
+sns.jointplot(data = iris, x = 'petal_length', y ='petal_width', hue = 'species')
+
 
 # ## Part 2
 
@@ -83,6 +101,12 @@ print(sns.get_dataset_names())
 
 anscombe = sns.load_dataset('anscombe')
 anscombe.head()
+
+
+# In[84]:
+
+
+anscombe.groupby('dataset').describe()
 
 
 # In[10]:
@@ -104,7 +128,7 @@ anscombe.groupby('dataset').describe().T
 # In[11]:
 
 
-sns.relplot(data = anscombe, x = 'x', y = 'y', col = 'dataset')
+sns.relplot(data = anscombe, x = 'x', y = 'y', col = 'dataset') # could add trend line..
 
 
 # 3.) Load the InsectSprays dataset and read it's documentation. Create a boxplot that shows the effectiveness of the different insect sprays.
@@ -136,7 +160,7 @@ sns.boxplot(data = InsectSprays, y = 'spray', x = 'count', hue = 'spray')
 plt.legend(bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
 
 
-# 4.) Load the swiss dataset and read it's documentation. Create visualizations to answer the following questions:
+# 2.) Load the swiss dataset and read it's documentation. Create visualizations to answer the following questions:
 
 # In[15]:
 
@@ -312,19 +336,7 @@ sns.barplot(data = top_four_rev, x = top_four_rev.index, y = 'Revenue')
 # sleepstudy = data('sleepstudy')
 # sleepstudy
 
-# In[70]:
-
-
-subject = sleepstudy.groupby('Subject').Reaction.agg(['mean'])
-
-
-# In[69]:
-
-
-subject = 
-
-
-# In[79]:
+# In[86]:
 
 
 plt.figure(figsize = (10,10))
